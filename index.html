@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+ <h1>Livre d'or de Nejla</h1>
+
+<form action="insert.php" method="post">
+    <label for="nom">ton nom</label>
+    <input type="text" name="nom">
+    <br>
+    <label for="user_name">ton prenom</label>
+    <input type="text" name="user_name">
+    <br>
+    <label for="message">Ecris moi quelque chose ...</label><br>
+    <textarea name="message" cols="30" rows="10"></textarea>
+    <input id=submitContent type="submit" value="Envoyer !">
+</form>
+
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+  import { getFirestore,  collection, addDoc, getDocs  } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAzLebL0dsqD0p1CCpaGkCU7UQthIiggp0",
+    authDomain: "llivre-dor-b94dc.firebaseapp.com",
+    projectId: "llivre-dor-b94dc",
+    storageBucket: "llivre-dor-b94dc.appspot.com",
+    messagingSenderId: "57646526381",
+    appId: "1:57646526381:web:fffa7d249b95de9fee3b24"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+        const submitContent = document.getElementById('submitContent');
+        submitContent.addEventListener('click', async (e) => {
+        const userName = document.getElementById('user_name')
+        const message = document.getElementById('message').value
+        
+
+        try {
+        const docRef = await addDoc(collection(db, "comments"), {
+            user_name: userName,
+            message: message
+        });
+        
+            console.log("Document written with ID: ", docRef.id);
+            } catch (e) {
+            console.error("Error adding document: ", e);
+            }
+
+    })
+
+        const querySnapshot = await getDocs(collection(db, "comments"));
+        querySnapshot.forEach((doc) => {
+            console.log({doc});
+       // console.log(`${doc.id} => ${doc.data()}`);
+       writeList(item)
+        });
+
+        const ListContainer = document.getElementById('ListContainer')
+        const writeList = function(item){
+            ListContainer.innerHTML
+            //COLLER LE HTML DE RECUPERATION DE LISTE
+        }
+
+</script>
+</body>
+</html>
+
